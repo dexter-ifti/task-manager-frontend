@@ -12,8 +12,8 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         const { data } = await axios.post("/api/users/login", credentials);
         const decoded = jwtDecode(data.token);
-        setUser(decoded);
-        localStorage.setItem("token", data.token);
+        setUser(decoded.id);
+        localStorage.setItem("authToken", data.token);
     };
 
     const logout = () => {
@@ -22,9 +22,24 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         if (token) {
-            setUser(jwtDecode(token));
+            try {
+                const decoded = jwtDecode(token);
+                if (decoded.exp * 1000 > Date.now()) {
+                    setUser(decoded.id);
+                } else {
+                    // Token is expired
+                    logout();
+                }
+            } catch (error) {
+                // Error decoding token
+                console.error("Error decoding token:", error);
+                logout();
+            }
+        } else {
+            // No token found
+            setUser(null);
         }
     }, []);
 

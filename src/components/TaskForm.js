@@ -25,7 +25,7 @@ const TaskForm = ({ task, onSubmit }) => {
     const [form, setForm] = useState({
         title: task?.title || "",
         description: task?.description || "",
-        status: task?.status || "To Do",
+        status: task?.status || "To do",
         priority: task?.priority || "Low",
         dueDate: task?.dueDate ? new Date(task.dueDate) : null,
     });
@@ -56,13 +56,13 @@ const TaskForm = ({ task, onSubmit }) => {
 
             const taskData = {
                 ...form,
-                userId: user._id, // Include the user ID in the task data
+                userId: user, 
             };
 
             if (task) {
-                await axios.patch(`/${api}/tasks/${task._id}`, taskData, config);
+                await axios.patch(`${api}/tasks/${task._id}`, taskData, config);
             } else {
-                await axios.post(`/${api}/tasks`, taskData, config);
+                await axios.post(`${api}/tasks`, taskData, config);
             }
             onSubmit();
         } catch (error) {
