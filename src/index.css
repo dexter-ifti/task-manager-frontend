@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-sage-50: #f8faf8;
+  --color-sage-100: #e8ede8;
+  --color-sage-200: #d1dcd1;
+  --color-sage-300: #b3c4b3;
+  --color-sage-400: #92a692;
+  --color-sage-500: #738973;
+  --color-sage-600: #5d6e5d;
+  --color-sage-700: #4d5b4d;
+  --color-sage-800: #424c42;
+  --color-sage-900: #3a413a;
+}
+
+body {
+  background-color: var(--color-sage-50);
+}
